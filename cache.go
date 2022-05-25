@@ -20,14 +20,10 @@ func NewCache() Cache {
 }
 
 func (cache *Cache) Get(key string) (string, bool) {
-	item, ok := cache.cacheItems[key]
-
-	if ok && item.itemExpire.IsZero() {
-		return item.itemValue, true
-	} else if ok && time.Now().UTC().After(item.itemExpire) {
-		delete(cache.cacheItems, key)
-
-		return "", false
+	if item, ok := cache.cacheItems[key]; ok {
+		if item.itemExpire.IsZero() || time.Now().Before(item.itemExpire) {
+			return item.itemValue, true
+		}
 	}
 
 	return "", false
@@ -37,7 +33,7 @@ func (cache *Cache) Put(key, value string) {
 	cache.cacheItems[key] = Item{itemValue: value}
 }
 
-func (cache *Cache) Keys() []string {
+func (cache Cache) Keys() []string {
 	var result []string
 
 	for key := range cache.cacheItems {

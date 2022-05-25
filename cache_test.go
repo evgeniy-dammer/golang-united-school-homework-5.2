@@ -179,7 +179,7 @@ func TestKeys(t *testing.T) {
 	}
 }
 
-/*func TestPutTill(t *testing.T) {
+func TestPutTill(t *testing.T) {
 	type inp struct {
 		key      string
 		value    string
@@ -196,7 +196,7 @@ func TestKeys(t *testing.T) {
 		{
 			name:  "Put key till",
 			items: make(map[string]Item),
-			input: inp{key: "ABC", value: "DEF", deadline: time.Now().Add(36000 * time.Second)},
+			input: inp{key: "ABC", value: "DEF", deadline: time.Now().Add(36000 * time.Minute)},
 			want:  "DEF",
 			ok:    true,
 		},
@@ -221,4 +221,4 @@ func TestKeys(t *testing.T) {
 			}
 		})
 	}
-}*/
+}
